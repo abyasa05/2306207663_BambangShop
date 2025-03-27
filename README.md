@@ -84,5 +84,10 @@ This is the place for you to write reflections:
 3. DashMap merupakan jenis HashMap yang dibuat untuk menangani operasi _multi-thread_. Dengan itu, tiap thread bisa mengakses DashMap secara _concurrent_ tanpa perlu melakukan locking pada keseluruhan Map. Sementara itu, Singleton pattern memastikan bahwa hanya bisa terdapat satu instansiasi struct pada satu waktu dengan bantuan Mutex. Penggunaan Singleton pattern akan melakukan locking pada DashMap sehingga hanya terdapat satu thread yang bisa mengakses dalam satu waktu. Hal ini bisa berdampak pada penurunan performa, terutama jika terdapat banyak operasi concurrency dalam satu waktu. Maka dari itu, penggunaan DashMap sebagai _List of Subscribers_ sudah cukup tepat.
 
 #### Reflection Publisher-2
+1. Pemisahan _repository_ dan _service_ dari _business logic_ merupakan implementasi dari salah satu design principle yaitu Single Responsibility Principle (SRP), di mana tiap bagian memiliki fungsionalitas yang jelas. Pemisahan ini juga berguna untuk mengurangi dependensi _business logic_ dengan _database_, atau dalam kata lain, perubahan pada database tidak akan mempengaruhi business logic. Selain itu, pemisahan ini juga mempermudah pembuatan dan penjalanan unit testing. Dengan ini, unit test tidak memerlukan koneksi langsung dengan database, melainkan bisa menggunakan _mock repository_ saja.
+
+2. Jika service dan repository digabungkan ke dalam model, maka program akan cenderung menjadi lebih kompleks dan sulit untuk di-maintain. Misalnya, logika bisnis sekarang harus diduplikasi pada tiap Model sehingga jika ada perubahan atau penambahan fitur pada logika bisnis, tiap model harus dimodifikasi juga. Selain itu, unit testing juga menjadi kurang praktis karena melibatkan operasi langsung dengan database.
+
+3. Postman berguna untuk mengecek respons dari _http request_ yang dikirimkan. Dengan ini, Postman bisa membantu saya untuk memastikan bahwa program bisa mengeluarkan _output_ yang tepat untuk tiap fitur dan _request_-nya.
 
 #### Reflection Publisher-3
