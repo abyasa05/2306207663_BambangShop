@@ -77,6 +77,11 @@ This is the place for you to write reflections:
 ### Mandatory (Publisher) Reflections
 
 #### Reflection Publisher-1
+1. Penggunaan trait dalam kasus ini bisa berguna jika misalnya akan dibuat beberapa jenis Subscriber dengan behaviour yang berbeda-beda terhadap notifikasi. Namun, karena tampaknya semua struct Subscriber hanya memuat nama dan URL saja, maka penggunaan trait belum begitu diperlukan untuk kasus ini dan penggunaan struct yang ada sudah mencukupi.
+
+2. Karena penggunaan URL harus bersifat unik, maka penggunaan DashMap merupakan pilihan yang lebih tepat mengingat sifatnya yang tidak memperbolehkan adanya nilai duplikat. Selain itu, waktu pengecekan pada DashMap juga relatif lebih efisien dibandingkan dengan Vec. Hal ini dikarenakan Vec mengecek nilai secara linear sehingga memiliki kompleksitas O(n) sementara DashMap memiliki kompleksitas O(1). Karena itu, DashMap lebih cocok untuk digunakan untuk menyimpan data (Subscriber) dalam jumlah besar.
+
+3. DashMap merupakan jenis HashMap yang dibuat untuk menangani operasi _multi-thread_. Dengan itu, tiap thread bisa mengakses DashMap secara _concurrent_ tanpa perlu melakukan locking pada keseluruhan Map. Sementara itu, Singleton pattern memastikan bahwa hanya bisa terdapat satu instansiasi struct pada satu waktu dengan bantuan Mutex. Penggunaan Singleton pattern akan melakukan locking pada DashMap sehingga hanya terdapat satu thread yang bisa mengakses dalam satu waktu. Hal ini bisa berdampak pada penurunan performa, terutama jika terdapat banyak operasi concurrency dalam satu waktu. Maka dari itu, penggunaan DashMap sebagai _List of Subscribers_ sudah cukup tepat.
 
 #### Reflection Publisher-2
 
